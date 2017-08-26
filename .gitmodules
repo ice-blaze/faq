@@ -1,0 +1,3 @@
+[submodule "laradock-faq"]
+	path = laradock-faq
+	url = https://github.com/Laradock/laradock.git
