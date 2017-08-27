@@ -8,6 +8,7 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <body>
         <nav class="navbar navbar-toggleable-sm navbar-light bg-faded">
@@ -29,57 +30,23 @@
                 </ul>
             </div>
         </nav>
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <h1 class="display-1">FAQ Me</h1>
-                    <p class="lead">FAQ Description</p>
-                </div>
-            </div>
-            <div class="row">
-                <form method="post" action="@yield('action')">
-                {{ csrf_field() }}
-                <div class="col-lg-4 offset-lg-2 col-md-6">
-                    <label for="question"><b>Question</b></label>
-                    <textarea type="text" class="form-control" id="question"
-                        aria-describedby="question" placeholder="Write the question"></textarea>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <label for="answer"><b>Answer</b></label>
-                    <textarea class="form-control" id="answer"
-                        aria-describedby="answer" placeholder="Anser the question"></textarea>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col text-center">
-                    <br/>
-                    <button type="submit" class="btn btn-primary">Add Question</button>
-                    <br/>
-                    <br/>
-                    </form>
-                </div>
-            </div>
-            @forelse($qas as $qa)
-                <div class="row">
-                    <div class="col-lg-10 offset-lg-2 col-md-8 ">
-                        <b>Q: What do you think.... ?</b>
-                        <p class="lead">A: It's not eay to ....</p>
+
+         <div class="container">
+            @if (count($errors))
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger" data-dismiss="alert">
+                        {{ $error  }}
                     </div>
+                @endforeach
+            @endif
+            @if(Session::has('error'))
+                <div class="alert alert-danger" data-dismiss="alert">
+                    {{ Session::get('error')  }}
                 </div>
-                <div class="row">
-                    <div class="col-lg-10 offset-lg-2">
-                        <b>Q: What do you think.... ?</b>
-                        <p class="lead">A: It's not eay to ....</p>
-                    </div>
-                </div>
-            @empty
-                <div class="row">
-                    <div class="col text-center">
-                        <p class="lead">No comments yet</p>
-                    </div>
-                </div>
-            @endforelse
+            @endif
         </div>
+
+        @yield('content')
 
         <nav class="navbar fixed-bottom navbar-light bg-faded text-center">
             <a class="navbar-brand" href="https://github.com/ice-blaze/faq">GitHub</a>

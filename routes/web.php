@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'FaqController@index');
+Route::post('/faqs/create', 'FaqController@store');
+Route::get('/{id}/{admin_code}', 'FaqController@show');
+Route::post('/{id}/{admin_code}', 'FaqController@update');
