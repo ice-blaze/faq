@@ -28,9 +28,7 @@ class FaqController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            // https://github.com/greggilbert/recaptcha
-            // https://www.google.com/recaptcha/admin#site/338583795?setup
-            // 'g-recaptcha-response' => 'required|recaptcha',
+            'g-recaptcha-response' => 'required', // https://github.com/greggilbert/recaptcha
             'question' => 'required',
             'answer' => 'required',
         ]);
@@ -60,9 +58,6 @@ class FaqController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            // https://github.com/greggilbert/recaptcha
-            // https://www.google.com/recaptcha/admin#site/338583795?setup
-            // 'g-recaptcha-response' => 'required|recaptcha',
             'question' => 'required',
             'answer' => 'required',
         ]);
