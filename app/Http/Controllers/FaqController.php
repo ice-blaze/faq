@@ -51,28 +51,29 @@ class FaqController extends Controller
     {
         $faq = Faq::find($request->id);
         $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
-        $qas = $faq->qas()->get();
+        $qas = $faq->qas()->orderBy('created_at', 'desc')->get();
 	return view('faqs.edit', compact('faq', 'qas', 'isOkay'));
     }
 
     public function update(Request $request)
     {
-        $this->validate($request, [
-            'question' => 'required',
-            'answer' => 'required',
-        ]);
-
         $faq = Faq::find($request->id);
         $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
         if(!$isOkay) {
+            // TODO redirect error html
             return "nope";
         }
 
-        $qa = new Qa;
+        $this->validate($request, [
+            'question' => 'required',
+            'answer' => 'required',
+            'qa_id' => 'required',
+        ]);
+
+        $qa = Qa::find($request->qa_id);
         $qa->question = $request->question;
         $qa->answer = $request->answer;
-        $qa->faq_id = $request->id; // TODO do it in a better way
-        $qa->save();
+        $qa->update();
 
         return redirect($faq->path());
     }

@@ -4,8 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <h1 class="display-2">Create your FAQ</h1>
-                <p class="lead">FAQ Description</p>
+                <h1 class="display-4">Create your FAQ</h1>
             </div>
         </div>
         <form method="post" action="/faqs/create">
@@ -26,8 +25,8 @@
                 <div class="col text-center">
                     <br/>
                     {!! Recaptcha::render() !!}
-                    {{-- {!! app('captcha')->render(); !!} --}}
                     <br/>
+                    {{-- {!! app('captcha')->render(); !!} --}}
                     <button type="submit" class="btn btn-primary">Add Question</button>
                     <br/>
                     <br/>

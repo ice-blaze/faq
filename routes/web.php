@@ -14,4 +14,6 @@
 Route::get('/', 'FaqController@index');
 Route::post('/faqs/create', 'FaqController@store');
 Route::get('/{id}/{admin_code}', 'FaqController@show');
+Route::get('/{id}/', 'FaqController@show');
 Route::post('/{id}/{admin_code}', 'FaqController@update');
+Route::post('/{id}/{admin_code}/qas/create', 'QaController@store');

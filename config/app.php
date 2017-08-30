@@ -180,6 +180,7 @@ return [
         // Recaptcha provider
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
         AlbertCht\InvisibleReCaptcha\InvisibleReCaptchaServiceProvider::class,
+        Dyusha\HtmlEditor\HtmlBlocksProvider::class,
 
     ],
 

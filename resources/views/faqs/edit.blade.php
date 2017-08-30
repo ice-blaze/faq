@@ -9,7 +9,7 @@
             </div>
         </div>
         @if($isOkay)
-            <form method="post" action="" class="">
+            <form method="post" action="/{{$faq->id}}/{{$faq->admin_code}}/qas/create" class="">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-4 offset-lg-2 col-md-6">
@@ -34,10 +34,35 @@
             </form>
         @endif
         @forelse($qas as $qa)
-            <div class="row">
+            <div class="row qa">
+                @if($isOkay)
+                    <div class="btn btn-primary edit-button" id="edit-button-{{$qa->id}}">edit</div>
+                @endif
                 <div class="col-lg-10 offset-lg-2 col-md-8 ">
-                    <b>Q: {{$qa->question}}</b>
-                    <p class="lead">A: {{$qa->answer}}</p>
+                    <div class="edit-qa">
+                        @if($isOkay)
+                            <form method="post" action="" class="">
+                                {{ csrf_field() }}
+                                <div class="form-group row">
+                                    <label for="question" class="col-sm-1 col col-form-label">Q:</label>
+                                    <input name="question" type="text" class="form-control col-sm-8" value="{{$qa->question}}"></input></b>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="answer" class="col-sm-1 col col-form-label">A:</label>
+                                    <textarea class="form-control col-sm-8" name="answer"
+                                        aria-describedby="answer" placeholder="Anser the question">{{$qa->answer}}</textarea>
+                                    <input type="hidden" name="qa_id" value="{{$qa->id}}">
+                                </div>
+                                <div class="form-group row">
+                                    <button type="submit" class="btn btn-primary offset-sm-1">Update QA</button>
+                                </div>
+                            </form>
+                        @endif
+                    </div>
+                    <div class="display-qa">
+                        <b>Q: {{$qa->question}}</b>
+                        <p class="lead">A: {{$qa->answer}}</p>
+                    </div>
                 </div>
                 <hr>
             </div>
@@ -49,4 +74,8 @@
             </div>
         @endforelse
     </div>
+@stop
+
+@section('afterScript')
+    <script type="text/javascript" src="{{ asset('js/edit-qa.js') }}"></script>
 @stop
