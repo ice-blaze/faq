@@ -18,6 +18,7 @@ class CreateQasTable extends Migration
             $table->integer('faq_id');
             $table->text('question');
             $table->text('answer');
+            $table->unsignedInteger('order');
             $table->timestamps();
         });
     }

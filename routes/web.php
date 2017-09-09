@@ -17,3 +17,5 @@ Route::get('/{id}/{admin_code}', 'FaqController@show');
 Route::get('/{id}/', 'FaqController@show');
 Route::post('/{id}/{admin_code}', 'FaqController@update');
 Route::post('/{id}/{admin_code}/qas/create', 'QaController@store');
+Route::post('/{id}/{admin_code}/qas/{qa_id}/up', 'QaController@up');
+Route::post('/{id}/{admin_code}/qas/{qa_id}/down', 'QaController@down');
