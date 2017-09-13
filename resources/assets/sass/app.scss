@@ -6,8 +6,13 @@
 @import "variables";
 
 // Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap/dist/css/bootstrap";
 
 .center {
     text-align: center;
+}
+
+.g-recaptcha {
+    width: 304px;
+    margin: 0 auto;
 }

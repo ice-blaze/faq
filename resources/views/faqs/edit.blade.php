@@ -93,5 +93,5 @@
 @stop
 
 @section('afterScript')
-    <script type="text/javascript" src="{{ asset('js/edit-qa.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/edit-qa.js') }}"></script>
 @stop
