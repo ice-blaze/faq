@@ -8,7 +8,7 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-        <script src='https://www.google.com/recaptcha/api.js'></script>
+
     </head>
     <body>
         <nav class="navbar navbar-toggleable-sm navbar-light bg-faded">
@@ -53,8 +53,8 @@
         </nav>
 
         <!-- scripts -->
-        <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
         <script type="text/javascript" src="{{ mix('js/basic.js') }}"></script>
+        <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
 
         @yield('afterScript')
     </body>

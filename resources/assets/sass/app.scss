@@ -7,6 +7,7 @@
 
 // Bootstrap
 @import "node_modules/bootstrap/dist/css/bootstrap";
+@import "node_modules/tether/dist/css/tether";
 
 .center {
     text-align: center;
@@ -15,4 +16,9 @@
 .g-recaptcha {
     width: 304px;
     margin: 0 auto;
+}
+
+// add a margin between the QA
+.qa {
+    margin: 1em 0;
 }

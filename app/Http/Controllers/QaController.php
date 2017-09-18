@@ -8,6 +8,41 @@ use App\Qa;
 
 class QaController extends Controller
 {
+    public function getJson(Request $request) {
+        $faq = Faq::find($request->id);
+        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
+        if(!$isOkay) {
+            // TODO redirect error html
+            return "nope";
+        }
+        $qa = Qa::find($request->qa_id);
+        return $qa;
+    }
+
+    public function update(Request $request)
+    {
+        $faq = Faq::find($request->id);
+        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
+        if(!$isOkay) {
+            // TODO redirect error html
+            return "nope";
+        }
+
+        $this->validate($request, [
+            'question' => 'required',
+            'answer' => 'required',
+        ]);
+
+        $faq = Faq::find($request->id);
+
+        $qa = Qa::find($request->qa_id);
+        $qa->question = $request->question;
+        $qa->answer = $request->answer;
+        $qa->save();
+
+        return redirect($faq->path());
+    }
+
     public function store(Request $request)
     {
         $faq = Faq::find($request->id);
@@ -34,6 +69,44 @@ class QaController extends Controller
         return redirect($faq->path());
     }
 
+
+    public function reorder(Request $request) {
+        $faq = Faq::find($request->id);
+        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
+        if(!$isOkay) {
+            // TODO redirect error html
+            return "nope";
+        }
+
+        $ids = $request->ids;
+        $qasIds = $faq->qas()->orderBy('order', 'desc')->get()->pluck("id")->toArray();
+        // check if both ids array match
+        sort($ids);
+        sort($qasIds);
+        $zip = array_map(null, $qasIds, $ids);
+        foreach ($zip as $id12) {
+            if( $id12[0] != $id12[1] ) {
+                return "nope ids dont match with qas";
+            }
+        }
+
+        // keep the real order
+        $ids = $request->ids;
+
+        $countIds = count($ids);
+        for($i = 0; $i < $countIds; $i++) {
+            $qa = Qa::find($ids[$i]);
+            $newOrder = $countIds - $i - 1;
+            if($qa->order != $newOrder){
+                $qa->order = $newOrder;
+                $qa->save();
+            }
+        }
+
+        return redirect($faq->path());
+    }
+
+    // TODO WARNING apparently there is still a bug
     public function up(Request $request)
     {
         $faq = Faq::find($request->id);
@@ -68,6 +141,7 @@ class QaController extends Controller
         return redirect($faq->path());
     }
 
+    // TODO WARNING apparently there is still a bug
     public function down(Request $request)
     {
         $faq = Faq::find($request->id);

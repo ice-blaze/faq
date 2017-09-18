@@ -48,6 +48,21 @@ class FaqController extends Controller
         return redirect($faq->path());
     }
 
+    private function checkAdminCode($request, $faq){
+        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
+        if(!$isOkay) {
+            abort(403, 'Unauthorized action.');
+        }
+    }
+
+    public function qas(Request $request)
+    {
+        $faq = Faq::find($request->id);
+        $this->checkAdminCode($request, $faq);
+        $qas = $faq->qas()->orderBy('order', 'desc')->get();
+	return $qas;
+    }
+
     public function show(Request $request)
     {
         $faq = Faq::find($request->id);
@@ -59,11 +74,8 @@ class FaqController extends Controller
     public function update(Request $request)
     {
         $faq = Faq::find($request->id);
+        $this->checkAdminCode($request, $faq);
         $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
-        if(!$isOkay) {
-            // TODO redirect error html
-            return "nope";
-        }
 
         $this->validate($request, [
             'question' => 'required',
