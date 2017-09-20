@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-lg-8 offset-lg-2 col-sm-12">
             <draggable class="list-group"
                 v-model="qas"
                 :options="{handle:'.handle'}"
@@ -13,10 +13,10 @@
                         </div>
                         <div v-else>
                             <div class="row">
-                                <div class="col-md-11">
+                                <div class="col-11">
                                     <strong>{{qa.question}}</strong>
                                 </div>
-                                <div class="col-md-1 text-right">
+                                <div class="col-1 text-right">
                                     <i class="handle fa fa-arrows fa-1x text-right"></i>
                                 </div>
                             </div>
@@ -31,17 +31,30 @@
                         </div>
                     </div>
                     <div class="card-footer text-muted">
-                        <div class="row">
-                            <div class="col-md-6 vertical-center">
-                                X days ago - XX likes
+                        <span v-if="qa.edit">
+                            <div class="row">
+                                <div class="col-md-7 vertical-center col-sm-6">
+                                    X days ago - XX likes
+                                </div>
+
+                                <div class="col-md-5 text-right col-sm-6">
+                                    <button class="btn btn-primary" v-on:click="updateQa(qa)" v-if="qa.edit">update</button>
+                                    <button class="btn btn-secondary" v-on:click="cancelQa(qa)" v-if="qa.edit">cancel</button>
+                                    <button class="btn btn-danger" v-on:click="deleteQa(qa)" v-if="qa.edit"><i class="fa fa-trash fa-1x"></i></button>
+                                </div>
                             </div>
-                            <div class="col-md-6 text-right">
-                                <a v-if="!qa.edit" class="" v-on:click="switchEdit(qa)"><i class="fa fa-cog fa-1x"></i></a>
-                                <button class="btn btn-primary" v-on:click="updateQa(qa)" v-if="qa.edit">update</button>
-                                <button class="btn btn-secondary" v-on:click="cancelQa(qa)" v-if="qa.edit">cancel</button>
-                                <button class="btn btn-danger" v-on:click="deleteQa(qa)" v-if="qa.edit"><i class="fa fa-trash fa-1x"></i></button>
+                        </span>
+                        <span v-else>
+                            <div class="row">
+                                <div class="col-11">
+                                    X days ago - XX likes
+                                </div>
+
+                                <div class="col-1 text-right">
+                                    <a v-if="!qa.edit" class="" v-on:click="switchEdit(qa)"><i class="fa fa-cog fa-1x"></i></a>
+                                </div>
                             </div>
-                        </div>
+                        </span>
                     </div>
                 </div>
             </draggable>
