@@ -33,6 +33,6 @@
                 </div>
             </form>
         @endif
-        <qas></qas>
+        <qas is_admin='{{ $isOkay }}'></qas>
     </div>
 @stop

@@ -57,8 +57,7 @@ class FaqController extends Controller
 
     public function qas(Request $request)
     {
-        $faq = Faq::find($request->id);
-        $this->checkAdminCode($request, $faq);
+        $faq = Faq::find($request->faq_id);
         $qas = $faq->qas()->orderBy('order', 'desc')->get();
 	return $qas;
     }

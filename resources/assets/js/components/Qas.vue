@@ -16,7 +16,7 @@
                                 <div class="col-11">
                                     <strong>{{qa.question}}</strong>
                                 </div>
-                                <div class="col-1 text-right">
+                                <div v-if="is_admin" class="col-1 text-right">
                                     <i class="handle fa fa-arrows fa-1x text-right"></i>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
                                     X days ago - XX likes
                                 </div>
 
-                                <div class="col-1 text-right">
+                                <div class="col-1 text-right" v-if="is_admin">
                                     <a v-if="!qa.edit" class="" v-on:click="switchEdit(qa)"><i class="fa fa-cog fa-1x"></i></a>
                                 </div>
                             </div>
@@ -68,6 +68,7 @@
 <script>
     import draggable from 'vuedraggable'
     export default {
+        props: ["is_admin"],
 	components: {
             draggable,
         },
@@ -94,7 +95,9 @@
                 this.switchEdit(qa)
             },
             reloadModel() {
-                axios.get(window.location.pathname + "/qas/").then(response => {
+                const faqId = window.location.pathname.split("/")[1]
+                console.log(faqId+ "/qas/")
+                axios.get("/qas/" + faqId).then(response => {
                     this.qas = response.data
                     this.qas = this.qas.map((x) => {
                         x.edit = false
