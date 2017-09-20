@@ -6,31 +6,42 @@
                 :options="{handle:'.handle'}"
                 @end="onEnd"
                 v-if="qas.length > 0">
-                <div v-for="(qa, index) in qas" class="card qa">
+                <div v-for="qa in qas" class="card qa">
                     <div class="card-header">
                         <div v-if="qa.edit">
                             <input type="text" class="form-control" v-model="qa.question" :value="qa.question">
-                            <!-- TODO icone handle, with hand on cursor hover -->
-                            <i class="handle">x</i>
                         </div>
                         <div v-else>
-                            <strong>{{qa.question}}</strong>
-                            <i class="handle">x</i>
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <strong>{{qa.question}}</strong>
+                                </div>
+                                <div class="col-md-1 text-right">
+                                    <i class="handle fa fa-arrows fa-1x text-right"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-block">
-                        <div v-if="qas[index].edit">
+                        <div v-if="qa.edit">
                             <textarea class="form-control" v-model="qa.answer">{{qa.answer}}</textarea>
-                            <button class="btn btn-primary" v-on:click="updateQa(qa)">update</button>
-                            <button class="btn btn-primary" v-on:click="cancelQa(qa)">cancel</button>
                         </div>
                         <div v-else>
                             <cite class="card-blockquote">{{qa.answer}}</cite>
-                            <button class="btn btn-primary" v-on:click="switchEdit(qa)">edit</button>
                         </div>
                     </div>
                     <div class="card-footer text-muted">
-                        X days ago - XX likes
+                        <div class="row">
+                            <div class="col-md-6 vertical-center">
+                                X days ago - XX likes
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a v-if="!qa.edit" class="" v-on:click="switchEdit(qa)"><i class="fa fa-cog fa-1x"></i></a>
+                                <button class="btn btn-primary" v-on:click="updateQa(qa)" v-if="qa.edit">update</button>
+                                <button class="btn btn-secondary" v-on:click="cancelQa(qa)" v-if="qa.edit">cancel</button>
+                                <button class="btn btn-danger" v-on:click="deleteQa(qa)" v-if="qa.edit"><i class="fa fa-trash fa-1x"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </draggable>

@@ -1,6 +1,7 @@
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import "node_modules/font-awesome/scss/font-awesome";
 
 // Variables
 @import "variables";
@@ -21,4 +22,17 @@
 // add a margin between the QA
 .qa {
     margin: 1em 0;
+}
+
+// For the handle when we drag and drop the QAs
+.handle:hover {
+    cursor: grab;
+}
+.handle:active {
+    cursor: grabbing;
+}
+
+.vertical-center {
+    display: flex;
+    align-items: center;
 }
