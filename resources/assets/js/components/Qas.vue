@@ -38,9 +38,9 @@
                                 </div>
 
                                 <div class="col-md-5 text-right col-sm-6">
-                                    <button class="btn btn-primary" v-on:click="updateQa(qa)" v-if="qa.edit">update</button>
-                                    <button class="btn btn-secondary" v-on:click="cancelQa(qa)" v-if="qa.edit">cancel</button>
-                                    <button class="btn btn-danger" v-on:click="deleteQa(qa)" v-if="qa.edit"><i class="fa fa-trash fa-1x"></i></button>
+                                    <button class="btn btn-outline-primary" v-on:click="updateQa(qa)" v-if="qa.edit">update</button>
+                                    <button class="btn btn-outline-secondary" v-on:click="cancelQa(qa)" v-if="qa.edit">cancel</button>
+                                    <button class="btn btn-outline-danger" v-on:click="deleteQa(qa)" v-if="qa.edit"><i class="fa fa-trash fa-1x"></i></button>
                                 </div>
                             </div>
                         </span>
