@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Qa;
 use App\Faq;
+use App\Helpers\AppHelper;
 
 class FaqController extends Controller
 {
@@ -48,13 +49,6 @@ class FaqController extends Controller
         return redirect($faq->path());
     }
 
-    private function checkAdminCode($request, $faq){
-        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
-        if(!$isOkay) {
-            abort(403, 'Unauthorized action.');
-        }
-    }
-
     public function qas(Request $request)
     {
         $faq = Faq::find($request->faq_id);
@@ -62,19 +56,19 @@ class FaqController extends Controller
 	return $qas;
     }
 
+
     public function show(Request $request)
     {
         $faq = Faq::find($request->id);
-        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
+        $isAdminCodeOkay = AppHelper::isAdmin($request, $faq);
         $qas = $faq->qas()->orderBy('order', 'desc')->get();
-	return view('faqs.edit', compact('faq', 'qas', 'isOkay'));
+	return view('faqs.edit', compact('faq', 'qas', 'isAdminCodeOkay'));
     }
 
     public function update(Request $request)
     {
         $faq = Faq::find($request->id);
-        $this->checkAdminCode($request, $faq);
-        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
+        AppHelper::checkAdminCode($request, $faq);
 
         $this->validate($request, [
             'question' => 'required',

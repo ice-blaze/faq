@@ -5,16 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Faq;
 use App\Qa;
+use App\Helpers\AppHelper;
 
 class QaController extends Controller
 {
     public function getJson(Request $request) {
         $faq = Faq::find($request->id);
-        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
-        if(!$isOkay) {
-            // TODO redirect error html
-            return "nope";
-        }
+
         $qa = Qa::find($request->qa_id);
         return $qa;
     }
@@ -22,11 +19,7 @@ class QaController extends Controller
     public function update(Request $request)
     {
         $faq = Faq::find($request->id);
-        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
-        if(!$isOkay) {
-            // TODO redirect error html
-            return "nope";
-        }
+        AppHelper::checkAdminCode($request, $faq);
 
         $this->validate($request, [
             'question' => 'required',
@@ -46,11 +39,7 @@ class QaController extends Controller
     public function store(Request $request)
     {
         $faq = Faq::find($request->id);
-        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
-        if(!$isOkay) {
-            // TODO redirect error html
-            return "nope";
-        }
+        AppHelper::checkAdminCode($request, $faq);
 
         $this->validate($request, [
             'question' => 'required',
@@ -72,11 +61,7 @@ class QaController extends Controller
 
     public function reorder(Request $request) {
         $faq = Faq::find($request->id);
-        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
-        if(!$isOkay) {
-            // TODO redirect error html
-            return "nope";
-        }
+        AppHelper::checkAdminCode($request, $faq);
 
         $ids = $request->ids;
         $qasIds = $faq->qas()->orderBy('order', 'desc')->get()->pluck("id")->toArray();
@@ -110,11 +95,7 @@ class QaController extends Controller
     public function up(Request $request)
     {
         $faq = Faq::find($request->id);
-        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
-        if(!$isOkay) {
-            // TODO redirect error html
-            return "nope";
-        }
+        AppHelper::checkAdminCode($request, $faq);
 
         $faq = Faq::find($request->id);
         $qa = Qa::find($request->qa_id);
@@ -145,11 +126,7 @@ class QaController extends Controller
     public function down(Request $request)
     {
         $faq = Faq::find($request->id);
-        $isOkay = $request->admin_code == $faq->admin_code; // TODO is safe ?
-        if(!$isOkay) {
-            // TODO redirect error html
-            return "nope";
-        }
+        AppHelper::checkAdminCode($request, $faq);
 
         $faq = Faq::find($request->id);
         $qa = Qa::find($request->qa_id);

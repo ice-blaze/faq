@@ -8,7 +8,7 @@
                 <p class="lead">FAQ Description</p>
             </div>
         </div>
-        @if($isOkay)
+        @if($isAdminCodeOkay)
             <form method="post" action="/{{$faq->id}}/{{$faq->admin_code}}/qas/create">
                 {{ csrf_field() }}
                 <div class="row">
@@ -33,6 +33,6 @@
                 </div>
             </form>
         @endif
-        <qas is_admin='{{ $isOkay }}'></qas>
+        <qas is_admin='{{ $isAdminCodeOkay }}'></qas>
     </div>
 @stop
