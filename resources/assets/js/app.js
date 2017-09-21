@@ -9,7 +9,3 @@ Vue.component('qas', require('./components/Qas.vue'));
 const app = new Vue({
     el: '#app',
 });
-
-$('.inDevModal').on('shown.bs.modal', function () {
-      $('#myInput').focus()
-})
