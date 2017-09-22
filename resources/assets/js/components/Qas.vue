@@ -40,7 +40,9 @@
                                 <div class="col-md-5 text-right col-sm-6">
                                     <button class="btn btn-outline-primary" v-on:click="updateQa(qa)" v-if="qa.edit">update</button>
                                     <button class="btn btn-outline-secondary" v-on:click="cancelQa(qa)" v-if="qa.edit">cancel</button>
-                                    <button class="btn btn-outline-danger" v-on:click="deleteQa(qa)" v-if="qa.edit"><i class="fa fa-trash fa-1x"></i></button>
+                                    <button class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" v-if="qa.edit" v-on:click="confirmationDeleteQa = qa">
+					<i class="fa fa-trash fa-1x"></i>
+				    </button>
                                 </div>
                             </div>
                         </span>
@@ -62,6 +64,26 @@
                 There is nothing nothing
             </div>
         </div>
+	<!-- Delete Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	    <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		    <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Delete QA</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		    </div>
+		    <div class="modal-body">
+			You really want to delete the QA: <cite>{{confirmationDeleteQa.question}}</cite>
+		    </div>
+		    <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<button type="button" v-on:click="deleteQa(confirmationDeleteQa)" data-dismiss="modal" class="btn btn-danger">Delete</button>
+		    </div>
+		</div>
+	    </div>
+	</div>
     </div>
 </template>
 
@@ -82,6 +104,7 @@
 	},
         data() {
             return {
+                confirmationDeleteQa: {question: "None", answer: "None"},
 		qas: [],
                 errors: [],
                 options: {
@@ -144,11 +167,13 @@
             },
             deleteQa(qa) {
                 axios.post(window.location.pathname + "/qas/" + qa.id + "/delete")
-                .then((response) => { console.log(response) })
+                .then((response) => {
+		    console.log(response)
+		    this.reloadModel()
+		})
                 // In case of error, reload the old model
                 .catch((error) => { console.log(error) })
 
-                this.reloadModel()
                 this.switchEdit(qa)
             },
             onEnd(event) {
