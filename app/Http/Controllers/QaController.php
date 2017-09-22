@@ -91,6 +91,18 @@ class QaController extends Controller
         return redirect($faq->path());
     }
 
+    public function delete(Request $request) {
+        $faq = Faq::find($request->id);
+        AppHelper::checkAdminCode($request, $faq);
+
+
+        $qa = Qa::find($request->qa_id);
+        $qa->delete();
+
+        $request->session()->flash('status', "Delete okay");
+        return redirect($faq->path());
+    }
+
     // TODO WARNING apparently there is still a bug
     public function up(Request $request)
     {

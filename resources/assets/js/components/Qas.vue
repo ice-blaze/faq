@@ -103,6 +103,7 @@
                         x.edit = false
                         return x
                     })
+                    this.$forceUpdate()
                 }).catch(e => {
                     this.errors.push(e)
                 })
@@ -140,6 +141,15 @@
                 this.qas[index].edit = !this.qas[index].edit
                 this.$forceUpdate()
                 return false
+            },
+            deleteQa(qa) {
+                axios.post(window.location.pathname + "/qas/" + qa.id + "/delete")
+                .then((response) => { console.log(response) })
+                // In case of error, reload the old model
+                .catch((error) => { console.log(error) })
+
+                this.reloadModel()
+                this.switchEdit(qa)
             },
             onEnd(event) {
                 const filtered = this.qas.map(x => x.id)

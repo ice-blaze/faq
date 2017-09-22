@@ -22,4 +22,5 @@ Route::post('/{id}/{admin_code}/qas/reorder', 'QaController@reorder');
 Route::post('/{id}/{admin_code}/qas/{qa_id}/up', 'QaController@up');
 Route::post('/{id}/{admin_code}/qas/{qa_id}/down', 'QaController@down');
 Route::post('/{id}/{admin_code}/qas/{qa_id}/update', 'QaController@update');
+Route::post('/{id}/{admin_code}/qas/{qa_id}/delete', 'QaController@delete');
 Route::get('/{id}/{admin_code}/qas/{qa_id}', 'QaController@getJson');
