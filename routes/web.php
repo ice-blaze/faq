@@ -11,6 +11,7 @@
 |
 */
 
+Auth::routes();
 Route::get('/', 'FaqController@index');
 Route::post('/faqs/create', 'FaqController@store');
 Route::get('/qas/{faq_id}/', 'FaqController@qas');
@@ -24,3 +25,4 @@ Route::post('/{id}/{admin_code}/qas/{qa_id}/down', 'QaController@down');
 Route::post('/{id}/{admin_code}/qas/{qa_id}/update', 'QaController@update');
 Route::post('/{id}/{admin_code}/qas/{qa_id}/delete', 'QaController@delete');
 Route::get('/{id}/{admin_code}/qas/{qa_id}', 'QaController@getJson');
+

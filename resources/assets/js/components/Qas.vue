@@ -3,7 +3,7 @@
         <div class="col-lg-8 offset-lg-2 col-sm-12">
             <draggable class="list-group"
                 v-model="qas"
-                :options="{handle:'.handle'}"
+                :options="{handle: '.handle', animation: 150}"
                 @end="onEnd"
                 v-if="qas.length > 0">
                 <div v-for="qa in qas" class="card qa">
@@ -109,6 +109,7 @@
                 errors: [],
                 options: {
                     handle: '.handle',
+                    opacity: 0.9,
                 }
             }
         },
