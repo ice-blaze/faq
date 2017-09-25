@@ -4,4 +4,7 @@ The goal of this project is to create a simple tool to create question/answers. 
 
 Demo: In dev
 
-Road map: In dev
+### Road map
+
+* User can up vote a QA
+* User can order the QAs with the users favorite first
