@@ -4,10 +4,15 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <h1 class="display-4">Create your FAQ</h1>
+                <br>
+                <h1 class="display-3">FAQme</h1>
+                <hr>
+                <h1 class="display-4">Create now your FAQ !</h1>
+                <br>
+
             </div>
         </div>
-        <form method="post" action="/faqs/create">
+        <form method="post" action="/faq/create">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-lg-4 offset-lg-2 col-md-6">
@@ -34,8 +39,28 @@
             </div>
         </form>
         <div class="row">
-            <div class="col text-center">
-                <p class="lead">No comments yet</p>
+            <div class="col-lg-8 offset-lg-2 col-sm-12">
+                @foreach ($fake_qas as $qa)
+                    <div class="card qa">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-11">
+                                    <strong>{{$qa["question"]}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <cite class="card-blockquote">{{$qa["answer"]}}</cite>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <div class="row">
+                                <div class="col-11">
+                                    {{$qa["time"]}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>

@@ -18,12 +18,12 @@
             <a class="navbar-brand" href="/">FAQ Me</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" data-toggle="modal" data-target="#inDevModal" href="#">Feedback</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link inDevModal" data-toggle="modal" data-target="#inDevModal" href="#">By us a beer</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="modal" data-target="#inDevModal" href="#">About</a>
                     </li>
@@ -32,6 +32,11 @@
         </nav>
 
          <div class="container">
+            @if (session("status"))
+                <div class="alert alert-info" data-dismiss="alert">
+                    {!! session("status") !!}
+                </div>
+            @endif
             @if (count($errors))
                 @foreach ($errors->all() as $error)
                     <div class="alert alert-danger" data-dismiss="alert">
@@ -49,7 +54,7 @@
         @yield('content')
 
         <nav class="navbar fixed-bottom navbar-light bg-faded text-center">
-            <a class="navbar-brand" href="https://github.com/ice-blaze/faq">GitHub</a>
+            <a class="navbar-brand" href="https://github.com/ice-blaze/faq"><i class="fa fa-github fa-1x"></i></a>
         </nav>
 
         <div class="modal fade" id="inDevModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

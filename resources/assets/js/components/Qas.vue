@@ -34,7 +34,7 @@
                         <span v-if="qa.edit">
                             <div class="row">
                                 <div class="col-md-7 vertical-center col-sm-6">
-                                    X days ago - XX likes
+                                    X days ago
                                 </div>
 
                                 <div class="col-md-5 text-right col-sm-6">
@@ -49,7 +49,7 @@
                         <span v-else>
                             <div class="row">
                                 <div class="col-11">
-                                    X days ago - XX likes
+                                    {{qa.since}} days ago
                                 </div>
 
                                 <div class="col-1 text-right" v-if="is_admin">
@@ -88,9 +88,11 @@
 </template>
 
 <script>
-    import draggable from 'vuedraggable'
+    import draggable from "vuedraggable"
+    import moment from "moment"
+
     export default {
-        props: ["is_admin"],
+        props: ["is_admin", "faq_id"],
 	components: {
             draggable,
         },
@@ -98,8 +100,9 @@
             console.log('Component mounted.')
         },
         created() {
+            // const admin_code = new URL(window.location.href).searchParams.get("admin_code");
             // const url = urljoin(window.location.pathname, "/qas/")
-            const url = window.location.pathname + "/qas/"
+            // const url = window.location.pathname + "/qas/"
             this.reloadModel()
 	},
         data() {
@@ -113,17 +116,19 @@
             }
         },
         methods: {
+            getAdminCode() {
+                return new URL(window.location.href).searchParams.get("admin_code")
+            },
             cancelQa(qa) {
                 this.refreshQa(qa)
                 this.switchEdit(qa)
             },
             reloadModel() {
-                const faqId = window.location.pathname.split("/")[1]
-                console.log(faqId+ "/qas/")
-                axios.get("/qas/" + faqId).then(response => {
+                axios.get("/faq/" + this.faq_id + "/qas").then(response => {
                     this.qas = response.data
                     this.qas = this.qas.map((x) => {
                         x.edit = false
+                        x.since = moment.utc(x.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()
                         return x
                     })
                     this.$forceUpdate()
@@ -132,11 +137,11 @@
                 })
             },
             refreshQa(qa) {
-                axios.get(window.location.pathname + "/qas/" + qa.id)
+                axios.get(window.location.origin + "/qa/" + qa.id)
                 .then((response) => {
                     qa.answer = response.data.answer
                     qa.question = response.data.question
-                    console.log(response)
+                    // console.log(response)
                 })
                 // In case of error, reload the old model
                 .catch((error) => {
@@ -146,11 +151,13 @@
 
             },
             updateQa(qa) {
-                axios.post(window.location.pathname + "/qas/" + qa.id + "/update", {
+                axios.post("/qa/" + qa.id + "/update?admin_code=" + this.getAdminCode(), {
                     answer: qa.answer,
                     question: qa.question,
                 })
-                .then((response) => { console.log(response) })
+                .then((response) => {
+                    // console.log(response)
+                })
                 // In case of error, reload the old model
                 .catch((error) => {
                     reloadQa(qa)
@@ -166,7 +173,7 @@
                 return false
             },
             deleteQa(qa) {
-                axios.post(window.location.pathname + "/qas/" + qa.id + "/delete")
+                axios.post("/qa/" + qa.id + "/delete?admin_code=" + this.getAdminCode())
                 .then((response) => {
 		    console.log(response)
 		    this.reloadModel()
@@ -178,7 +185,7 @@
             },
             onEnd(event) {
                 const filtered = this.qas.map(x => x.id)
-                axios.post(window.location.pathname + "/qas/reorder", {ids: filtered})
+                axios.post(window.location.pathname + "/qas_reorder?admin_code=" + this.getAdminCode(), {ids: filtered})
                 .then((response) => {
                     // maybe too heavy, could just invert
                     // console.log(response)
@@ -190,7 +197,7 @@
             // not used currently
             up(qasId) {
                 // move up the qa
-                axios.post(window.location.pathname + "/qas/" + qasId + "/up")
+                axios.post("/qa/" + qasId + "/up?admin_code=" + this.getAdminCode())
                 .then((response) => {
                     // maybe too heavy, could just invert
                     this.reloadModel()
@@ -203,7 +210,7 @@
             },
             down(qasId) {
                 // move up the qa
-                axios.post(window.location.pathname + "/qas/" + qasId + "/down")
+                axios.post("/qa/" + qasId + "/down?admin_code=" + this.getAdminCode())
                 .then((response) => {
                     // maybe too heavy, could just invert
                     this.reloadModel()

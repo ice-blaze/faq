@@ -11,6 +11,6 @@ class Faq extends Model
     }
 
     public function path() {
-        return '/'.$this->id.'/'.$this->admin_code;
+        return '/faq/'.$this->id.'?admin_code='.$this->admin_code;
     }
 }

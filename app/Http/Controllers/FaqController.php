@@ -21,9 +21,23 @@ class FaqController extends Controller
 
     public function index(Request $request)
     {
-	$qas = Qa::all();
+        $fake_qas = [
+            [
+                "question" => "How will my questions look like ?",
+                "answer" => "Certainly like this cards.",
+                "time" => "Some days ago",
+            ], [
+                "question" => "Do I need an account ?",
+                "answer" => "No there is no need. But dont loose the admin code!",
+                "time" => "Some days ago + a bit",
+            ], [
+                "question" => "Is it free ?",
+                "answer" => "Of course.",
+                "time" => "Some days ago + a lot",
+            ],
+        ];
 
-	return view('faqs.create', compact('qas'));
+        return view('faqs.create', compact("fake_qas"));
     }
 
     public function store(Request $request)
@@ -46,7 +60,10 @@ class FaqController extends Controller
         $qa->order = 0;
         $qa->save();
 
-        return redirect($faq->path());
+        return redirect($faq->path())->with("status",
+            "FAQ created. Be sure to <strong>save</strong> ".
+            "somewhere the <strong>link</strong> with te <strong>admin code</strong>!"
+        );
     }
 
     public function qas(Request $request)
@@ -59,7 +76,7 @@ class FaqController extends Controller
 
     public function show(Request $request)
     {
-        $faq = Faq::find($request->id);
+        $faq = Faq::find($request->faq_id);
         $isAdminCodeOkay = AppHelper::isAdmin($request, $faq);
         $qas = $faq->qas()->orderBy('order', 'desc')->get();
 	return view('faqs.edit', compact('faq', 'qas', 'isAdminCodeOkay'));
@@ -67,14 +84,14 @@ class FaqController extends Controller
 
     public function update(Request $request)
     {
-        $faq = Faq::find($request->id);
-        AppHelper::checkAdminCode($request, $faq);
-
         $this->validate($request, [
             'question' => 'required',
             'answer' => 'required',
-            'qa_id' => 'required',
+            'admin_code' => 'required',
         ]);
+
+        $faq = Faq::find($request->faq_id);
+        AppHelper::checkAdminCode($request, $faq);
 
         $qa = Qa::find($request->qa_id);
         $qa->question = $request->question;

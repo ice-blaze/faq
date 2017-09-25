@@ -10,25 +10,22 @@ use App\Helpers\AppHelper;
 class QaController extends Controller
 {
     public function getJson(Request $request) {
-        $faq = Faq::find($request->id);
-
         $qa = Qa::find($request->qa_id);
         return $qa;
     }
 
     public function update(Request $request)
     {
-        $faq = Faq::find($request->id);
-        AppHelper::checkAdminCode($request, $faq);
-
         $this->validate($request, [
             'question' => 'required',
             'answer' => 'required',
+            'admin_code' => 'required',
         ]);
 
-        $faq = Faq::find($request->id);
-
         $qa = Qa::find($request->qa_id);
+        $faq = $qa->faq;
+        AppHelper::checkAdminCode($request, $faq);
+
         $qa->question = $request->question;
         $qa->answer = $request->answer;
         $qa->save();
@@ -38,15 +35,14 @@ class QaController extends Controller
 
     public function store(Request $request)
     {
-        $faq = Faq::find($request->id);
-        AppHelper::checkAdminCode($request, $faq);
-
         $this->validate($request, [
             'question' => 'required',
             'answer' => 'required',
+            'admin_code' => 'required',
         ]);
 
-        $faq = Faq::find($request->id);
+        $faq = Faq::find($request->faq_id);
+        AppHelper::checkAdminCode($request, $faq);
 
         $qa = new Qa;
         $qa->question = $request->question;
@@ -60,7 +56,12 @@ class QaController extends Controller
 
 
     public function reorder(Request $request) {
-        $faq = Faq::find($request->id);
+        $this->validate($request, [
+            'ids' => 'required',
+            'admin_code' => 'required',
+        ]);
+
+        $faq = Faq::find($request->faq_id);
         AppHelper::checkAdminCode($request, $faq);
 
         $ids = $request->ids;
@@ -92,11 +93,14 @@ class QaController extends Controller
     }
 
     public function delete(Request $request) {
-        $faq = Faq::find($request->id);
-        AppHelper::checkAdminCode($request, $faq);
-
+        $this->validate($request, [
+            'admin_code' => 'required',
+        ]);
 
         $qa = Qa::find($request->qa_id);
+        $faq = $qa->faq;
+        AppHelper::checkAdminCode($request, $faq);
+
         $qa->delete();
 
         $request->session()->flash('status', "Delete okay");
@@ -106,11 +110,13 @@ class QaController extends Controller
     // TODO WARNING apparently there is still a bug
     public function up(Request $request)
     {
-        $faq = Faq::find($request->id);
-        AppHelper::checkAdminCode($request, $faq);
+        $this->validate($request, [
+            'admin_code' => 'required',
+        ]);
 
-        $faq = Faq::find($request->id);
         $qa = Qa::find($request->qa_id);
+        $faq = $qa->faq;
+        AppHelper::checkAdminCode($request, $faq);
 
         // If there is not enough question/answer, don't bother
         if($faq->qas()->count() <= 1) {
@@ -137,11 +143,13 @@ class QaController extends Controller
     // TODO WARNING apparently there is still a bug
     public function down(Request $request)
     {
-        $faq = Faq::find($request->id);
-        AppHelper::checkAdminCode($request, $faq);
+        $this->validate($request, [
+            'admin_code' => 'required',
+        ]);
 
-        $faq = Faq::find($request->id);
         $qa = Qa::find($request->qa_id);
+        $faq = $qa->faq;
+        AppHelper::checkAdminCode($request, $faq);
 
         // If there is not enough question/answer, don't bother
         if($faq->qas()->count() <= 1) {

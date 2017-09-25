@@ -12,15 +12,14 @@
 */
 
 Route::get('/', 'FaqController@index');
-Route::post('/faqs/create', 'FaqController@store');
-Route::get('/qas/{faq_id}/', 'FaqController@qas');
-Route::get('/{id}/{admin_code}', 'FaqController@show');
-Route::get('/{id}/', 'FaqController@show');
-Route::post('/{id}/{admin_code}', 'FaqController@update');
-Route::post('/{id}/{admin_code}/qas/create', 'QaController@store');
-Route::post('/{id}/{admin_code}/qas/reorder', 'QaController@reorder');
-Route::post('/{id}/{admin_code}/qas/{qa_id}/up', 'QaController@up');
-Route::post('/{id}/{admin_code}/qas/{qa_id}/down', 'QaController@down');
-Route::post('/{id}/{admin_code}/qas/{qa_id}/update', 'QaController@update');
-Route::post('/{id}/{admin_code}/qas/{qa_id}/delete', 'QaController@delete');
-Route::get('/{id}/{admin_code}/qas/{qa_id}', 'QaController@getJson');
+Route::post('/faq/create', 'FaqController@store');
+Route::get('/faq/{faq_id}/qas', 'FaqController@qas');
+Route::get('/faq/{faq_id}/', 'FaqController@show');
+Route::post('/faq/{faq_id}', 'FaqController@update');
+Route::post('/faq/{faq_id}/qa_create', 'QaController@store');
+Route::post('/faq/{faq_id}/qas_reorder', 'QaController@reorder');
+Route::post('/qa/{qa_id}/up', 'QaController@up');
+Route::post('/qa/{qa_id}/down', 'QaController@down');
+Route::post('/qa/{qa_id}/update', 'QaController@update');
+Route::post('/qa/{qa_id}/delete', 'QaController@delete');
+Route::get('/qa/{qa_id}', 'QaController@getJson');
