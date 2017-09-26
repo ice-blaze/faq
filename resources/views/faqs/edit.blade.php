@@ -36,3 +36,7 @@
         <qas is_admin="{{ $isAdminCodeOkay }}" faq_id="{{ $faq->id }}"></qas>
     </div>
 @stop
+
+@section("afterScript")
+    <script type="text/javascript" src="{{ mix('js/autosize.js') }}"></script>
+@stop
