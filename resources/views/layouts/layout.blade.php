@@ -8,7 +8,7 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
+        <script src="https://www.google.com/recaptcha/api.js"> </script>
     </head>
     <body>
         <nav class="navbar navbar-toggleable-sm navbar-light bg-faded">

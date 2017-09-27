@@ -43,7 +43,7 @@ class FaqController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'g-recaptcha-response' => 'required', // https://github.com/greggilbert/recaptcha
+	    'g-recaptcha-response' => 'required|recaptcha', // https://github.com/greggilbert/recaptcha
             'question' => 'required',
             'answer' => 'required',
         ]);

@@ -109,7 +109,6 @@
             return {
                 confirmationDeleteQa: {question: "None", answer: "None"},
 		qas: [],
-                errors: [],
                 options: {
                     handle: '.handle',
                 }
@@ -133,7 +132,7 @@
                     })
                     this.$forceUpdate()
                 }).catch(e => {
-                    this.errors.push(e)
+                    console.log(e)
                 })
             },
             refreshQa(qa) {
