@@ -9,12 +9,15 @@
                 <div v-for="qa in qas" class="card qa">
                     <div class="card-header">
                         <div v-if="qa.edit">
-                            <input type="text" class="form-control" v-model="qa.question" :value="qa.question" @keydown.ctrl.enter="updateQa(qa)">
+                            <input type="text" class="form-control" v-model="qa.question"
+                                :value="qa.question" @keydown.ctrl.enter="updateQa(qa)"
+                                @keydown.esc="cancelQa(qa)"
+                            >
                         </div>
                         <div v-else>
                             <div class="row">
                                 <div class="col-11">
-                                    <strong>{{qa.question}}</strong>
+                                    <strong><span v-html="qa.question_html"></span></strong>
                                 </div>
                                 <div v-if="is_admin" class="col-1 text-right">
                                     <i class="handle fa fa-arrows fa-1x text-right"></i>
@@ -24,17 +27,22 @@
                     </div>
                     <div class="card-block">
                         <div v-if="qa.edit">
-                            <textarea class="form-control" v-model="qa.answer" @keydown.ctrl.enter="updateQa(qa)">{{qa.answer}}</textarea>
+                            <textarea class="form-control" v-model="qa.answer"
+                                @keydown.ctrl.enter="updateQa(qa)"
+                                @keydown.esc="cancelQa(qa)"
+			    >
+				{{qa.answer}}
+			    </textarea>
                         </div>
                         <div v-else>
-                            <cite class="card-blockquote">{{qa.answer}}</cite>
+                            <cite class="card-blockquote"><span v-html="qa.answer_html"></span></cite>
                         </div>
                     </div>
                     <div class="card-footer text-muted">
                         <span v-if="qa.edit">
                             <div class="row">
                                 <div class="col-md-7 vertical-center col-sm-6">
-                                    X days ago
+                                    {{qa.since}} days ago
                                 </div>
 
                                 <div class="col-md-5 text-right col-sm-6">
@@ -90,8 +98,8 @@
 <script>
     import draggable from "vuedraggable"
     import moment from "moment"
+    import Autolinker from "autolinker"
     import autosize from "autosize"
-
 
     export default {
         props: ["is_admin", "faq_id"],
@@ -130,6 +138,8 @@
                     this.qas = this.qas.map((x) => {
                         x.edit = false
                         x.since = moment.utc(x.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()
+                        x.answer_html = Autolinker.link(x.answer)
+                        x.question_html = Autolinker.link(x.question)
                         return x
                     })
                     this.$forceUpdate()
@@ -141,7 +151,10 @@
                 axios.get(window.location.origin + "/qa/" + qa.id)
                 .then((response) => {
                     qa.answer = response.data.answer
+                    qa.answer_html = Autolinker.link(response.data.answer)
                     qa.question = response.data.question
+                    qa.question_html = Autolinker.link(response.data.question)
+                    this.$forceUpdate()
                     // console.log(response)
                 })
                 // In case of error, reload the old model
@@ -157,11 +170,12 @@
                     question: qa.question,
                 })
                 .then((response) => {
+                    this.refreshQa(qa)
                     // console.log(response)
                 })
                 // In case of error, reload the old model
                 .catch((error) => {
-                    reloadQa(qa)
+                    this.refreshQa(qa)
                     console.log(error)
                 })
 
@@ -171,7 +185,8 @@
                 const index = this.qas.findIndex(x => x.id === qa.id)
                 this.qas[index].edit = !this.qas[index].edit
                 this.$forceUpdate()
-                //
+
+                // autosize need to be done after
                 const legacyLen = document.querySelectorAll('textarea').length
                 setTimeout(() => {
                     const currentLen = document.querySelectorAll('textarea').length

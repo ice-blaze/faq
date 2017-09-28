@@ -73,11 +73,13 @@
         },
         created() {
             // TODO could use the recaptcha call back instead of an ugly interval
-            this.recaptchaInterval = setInterval(() => {
-                if($("#g-recaptcha-response").val() !== "") {
-                    this.recaptchaError = false
-                }
-            }, 1000);
+            if(this.is_admin) {
+                this.recaptchaInterval = setInterval(() => {
+                    if($("#g-recaptcha-response").val() !== "") {
+                        this.recaptchaError = false
+                    }
+                }, 1000);
+            }
 	},
         data() {
             return {
@@ -91,7 +93,7 @@
             validateBeforeSubmit() {
 		this.$validator.validateAll().then((result) => {
                     const recaptchaResponse = $("#g-recaptcha-response").val() !== ""
-		    if (result && recaptchaResponse) {
+		    if (result && (this.is_admin || recaptchaResponse)) {
                         if(this.is_admin) {
                             // TODO find a way to update the QAs without reloading the page
                             axios.post("/faq/" + this.faq_id + "/qa_create?admin_code=" + this.admin_code, {
@@ -107,7 +109,6 @@
                             .catch((error) => {
                                 console.log(error)
                             })
-
                         } else {
                             axios.post("/faq/create", {
                                 answer: this.answer,
