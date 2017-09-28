@@ -18,6 +18,7 @@ mix.autoload({
 
 mix.js('resources/assets/js/app.js', 'public/js').version();
 mix.js('resources/assets/js/edit-qa.js', 'public/js').version();
+mix.js('resources/assets/js/clipboard.js', 'public/js').version();
 mix.sass('resources/assets/sass/app.scss', 'public/css').version();
 mix.js([
     './node_modules/jquery/dist/jquery.js',

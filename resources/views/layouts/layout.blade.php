@@ -11,8 +11,11 @@
         <script src="https://www.google.com/recaptcha/api.js"> </script>
     </head>
     <body>
-        <nav class="navbar navbar-toggleable-sm navbar-light bg-faded">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-toggleable-sm navbar-light bg-faded sticky-top">
+            <button class="navbar-toggler navbar-toggler-right"
+                type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation"
+            >
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand" href="/">FAQ Me</a>
@@ -53,7 +56,7 @@
 
         @yield('content')
 
-        <nav class="navbar fixed-bottom navbar-light bg-faded text-center">
+        <nav class="navbar navbar-light bg-faded text-center">
             <a class="navbar-brand" href="https://github.com/ice-blaze/faq"><i class="fa fa-github fa-1x"></i></a>
         </nav>
 

@@ -79,7 +79,14 @@ class FaqController extends Controller
         $faq = Faq::find($request->faq_id);
         $isAdminCodeOkay = AppHelper::isAdmin($request, $faq);
         $qas = $faq->qas()->orderBy('order', 'desc')->get();
-	return view('faqs.edit', compact('faq', 'qas', 'isAdminCodeOkay'));
+
+        $adminLink = "";
+        $guestLink = "";
+        if ($isAdminCodeOkay) {
+            $adminLink = url($faq->path());
+            $guestLink = url($faq->guestPath());
+        }
+	return view('faqs.edit', compact('faq', 'qas', 'isAdminCodeOkay', 'adminLink', 'guestLink'));
     }
 
     public function update(Request $request)
