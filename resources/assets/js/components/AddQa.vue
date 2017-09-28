@@ -1,9 +1,7 @@
 <template>
     <div class="row">
         <div class="col-12">
-            <form @submit.prevent="validateBeforeSubmit"
-		method="post" action="/faq/create"
-	    >
+            <form @submit.prevent="validateBeforeSubmit">
                 <div class="row">
                     <div :class="{
 			'col-lg-4': true,
@@ -65,10 +63,13 @@
 </template>
 
 <script>
+    import autosize from "autosize"
+
     export default {
         props: ["is_admin", "faq_id", "admin_code"],
         mounted() {
             console.log('Component mounted.')
+            autosize(document.querySelectorAll('textarea'))
         },
         created() {
             // TODO could use the recaptcha call back instead of an ugly interval

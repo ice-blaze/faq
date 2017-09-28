@@ -40,7 +40,3 @@
         </div>
     </div>
 @stop
-
-@section("afterScript")
-    <script type="text/javascript" src="{{ mix('js/autosize.js') }}"></script>
-@stop

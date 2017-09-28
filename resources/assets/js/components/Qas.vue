@@ -9,7 +9,7 @@
                 <div v-for="qa in qas" class="card qa">
                     <div class="card-header">
                         <div v-if="qa.edit">
-                            <input type="text" class="form-control" v-model="qa.question" :value="qa.question">
+                            <input type="text" class="form-control" v-model="qa.question" :value="qa.question" @keydown.ctrl.enter="updateQa(qa)">
                         </div>
                         <div v-else>
                             <div class="row">
@@ -24,7 +24,7 @@
                     </div>
                     <div class="card-block">
                         <div v-if="qa.edit">
-                            <textarea class="form-control" v-model="qa.answer">{{qa.answer}}</textarea>
+                            <textarea class="form-control" v-model="qa.answer" @keydown.ctrl.enter="updateQa(qa)">{{qa.answer}}</textarea>
                         </div>
                         <div v-else>
                             <cite class="card-blockquote">{{qa.answer}}</cite>
@@ -90,6 +90,8 @@
 <script>
     import draggable from "vuedraggable"
     import moment from "moment"
+    import autosize from "autosize"
+
 
     export default {
         props: ["is_admin", "faq_id"],
@@ -169,6 +171,18 @@
                 const index = this.qas.findIndex(x => x.id === qa.id)
                 this.qas[index].edit = !this.qas[index].edit
                 this.$forceUpdate()
+                //
+                const legacyLen = document.querySelectorAll('textarea').length
+                setTimeout(() => {
+                    const currentLen = document.querySelectorAll('textarea').length
+
+                    while(legacyLen === currentLen) {
+                        sleep(150)
+                    }
+
+                    autosize(document.querySelectorAll('textarea'))
+                }, 1)
+
                 return false
             },
             deleteQa(qa) {
