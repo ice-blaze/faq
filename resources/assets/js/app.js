@@ -13,4 +13,3 @@ Vue.use(VeeValidate)
 const app = new Vue({
     el: '#app',
 });
-

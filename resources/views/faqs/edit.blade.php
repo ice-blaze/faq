@@ -17,12 +17,18 @@
                                 <button type="button"
                                     class="btn btn-sm btn-outline-warning"
                                     data-clipboard-text="{{$guestLink}}"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Copied!"
                                 >
                                     copy guest URL
                                 </button>&nbsp;&nbsp;
                                 <button type="button"
                                     class="btn btn-sm btn-outline-warning"
                                     data-clipboard-text="{{$adminLink}}"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Copied!"
                                 >
                                     copy admin URL
                                 </button>

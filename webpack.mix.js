@@ -16,7 +16,10 @@ mix.autoload({
     tether: ['Tether', 'window.Tether'],
 });
 
-mix.js('resources/assets/js/app.js', 'public/js').version();
+mix.js([
+    'resources/assets/js/app.js',
+    'resources/assets/js/tooltips.js',
+], 'public/js').version();
 mix.js('resources/assets/js/edit-qa.js', 'public/js').version();
 mix.js('resources/assets/js/clipboard.js', 'public/js').version();
 mix.sass('resources/assets/sass/app.scss', 'public/css').version();
