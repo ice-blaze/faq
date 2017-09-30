@@ -4,7 +4,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>FAQ Me</title>
+        <title>FAQme</title>
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
@@ -18,41 +18,44 @@
             >
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="/">FAQ Me</a>
+            <a class="navbar-brand" href="/">FAQme</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <!-- <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" data-toggle="modal" data-target="#inDevModal" href="#">Feedback</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link inDevModal" data-toggle="modal" data-target="#inDevModal" href="#">By us a beer</a>
-                    </li> -->
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="modal" data-target="#inDevModal" href="#">About</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </nav>
 
-         <div class="container">
-            @if (session("status"))
-                <div class="alert alert-info" data-dismiss="alert">
-                    {!! session("status") !!}
+        @if(empty($is_404))
+            @if(session("status") || count($errors))
+            <br>
+            @endif
+            <!--  -->
+            <div class="container">
+                <div class="row text-center">
+                    @if (session("status"))
+                        <div class="alert alert-info col-lg-8 offset-lg-2 col-12" data-dismiss="alert">
+                            {!! session("status") !!}
+                        </div>
+                    @endif
+                    @if (count($errors))
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger col-lg-8 offset-lg-2 col-12" data-dismiss="alert">
+                                {{ $error  }}
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
-            @endif
-            @if (count($errors))
-                @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger" data-dismiss="alert">
-                        {{ $error  }}
-                    </div>
-                @endforeach
-            @endif
-            @if(Session::has('error'))
-                <div class="alert alert-danger" data-dismiss="alert">
-                    {{ Session::get('error')  }}
-                </div>
-            @endif
-        </div>
+            </div>
+        @endif
 
         @yield('content')
 

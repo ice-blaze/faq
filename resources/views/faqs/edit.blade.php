@@ -40,7 +40,7 @@
         @endif
         <div class="row">
             <div class="col-12 text-center">
-                <h1 class="display-1">FAQ Me</h1>
+                <h1 class="display-4">FAQme</h1>
                 <!-- <p class="lead">FAQ Description</p> -->
             </div>
         </div>

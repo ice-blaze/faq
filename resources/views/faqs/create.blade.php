@@ -5,9 +5,8 @@
         <div class="row">
             <div class="col text-center">
                 <br>
-                <h1 class="display-3">FAQme</h1>
-                <hr>
                 <h1 class="display-4">Create now your FAQ !</h1>
+                <hr>
                 <br>
 
             </div>

@@ -77,6 +77,10 @@ class FaqController extends Controller
     public function show(Request $request)
     {
         $faq = Faq::find($request->faq_id);
+        // redirect home if faq doesn't exist
+        if($faq == null) {
+            return redirect("/")->withErrors("FAQ couldn't be found.");
+        }
         $isAdminCodeOkay = AppHelper::isAdmin($request, $faq);
         $qas = $faq->qas()->orderBy('order', 'desc')->get();
 
