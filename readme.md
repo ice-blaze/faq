@@ -8,3 +8,14 @@ The goal of this project is to create a simple tool to create question/answers. 
 
 * User can up vote a QA
 * User can order the QAs with the users favorite first
+
+### Contribute
+```
+...
+# change in .env 
+#     WORKSPACE_INSTALL_NODE=true
+#     WORKSPACE_INSTALL_YARN=true
+#     WORKSPACE_INSTALL_PYTHON=true
+sudo docker-compose build workspace
+...
+```
