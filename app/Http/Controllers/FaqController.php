@@ -24,7 +24,7 @@ class FaqController extends Controller
         $fake_qas = [
             [
                 "question" => "How will my questions look like ?",
-                "answer" => "Certainly like this cards.",
+                "answer" => "Certainly like this card.",
                 "time" => "Some days ago",
             ], [
                 "question" => "Do I need an account ?",
