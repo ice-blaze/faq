@@ -15,7 +15,7 @@ class CreateQasTable extends Migration
     {
         Schema::create('qas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('faq_id');
+            $table->string('faq_id');
             $table->text('question');
             $table->text('answer');
             $table->unsignedInteger('order');

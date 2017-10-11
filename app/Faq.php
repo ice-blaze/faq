@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Faq extends Model
 {
+    protected $primaryKey = "id";
+    public $incrementing = false;
+
     public function qas() {
         return $this->hasMany(Qa::class);
     }

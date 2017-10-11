@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col-12 text-center btn-padding">
                                 <button type="button"
-                                    class="btn btn-sm btn-outline-warning"
+                                    class="btn btn-sm btn-outline-warning btn-cursor"
                                     data-clipboard-text="{{$guestLink}}"
                                     data-toggle="tooltip"
                                     data-placement="top"
@@ -24,7 +24,7 @@
                                     copy guest URL
                                 </button>&nbsp;&nbsp;
                                 <button type="button"
-                                    class="btn btn-sm btn-outline-warning"
+                                    class="btn btn-sm btn-outline-warning btn-cursor"
                                     data-clipboard-text="{{$adminLink}}"
                                     data-toggle="tooltip"
                                     data-placement="top"
@@ -45,7 +45,7 @@
             </div>
         </div>
         @if($isAdminCodeOkay)
-            <add-qa :is_admin="{{ $isAdminCodeOkay }}" :faq_id="{{ $faq->id }}" :admin_code="'{{ $faq->admin_code }}'"></add-qa>
+            <add-qa :is_admin="{{ $isAdminCodeOkay }}" :faq_id="'{{ $faq->id }}'" :admin_code="'{{ $faq->admin_code }}'"></add-qa>
         @endif
         <qas is_admin="{{ $isAdminCodeOkay }}" faq_id="{{ $faq->id }}"></qas>
     </div>

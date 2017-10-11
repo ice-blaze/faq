@@ -50,6 +50,7 @@ class FaqController extends Controller
 
         // project creation
         $faq = new Faq;
+        $faq->id = $this->generateRandomString(13);
         $faq->admin_code = $this->generateRandomString(13);
         $faq->save();
 

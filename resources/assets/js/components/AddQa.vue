@@ -48,11 +48,13 @@
 			'form-group': true,
 			'has-danger': recaptchaError,
 		    }">
-                        <br v-show="!is_admin"/>
-                        <div v-show="!is_admin" class="g-recaptcha" data-sitekey="6LfzYC4UAAAAADARTXE5OdyOLsm6XiDhgersZzfz"></div>
-			<div v-show="recaptchaError" class="form-control-feedback"><i class="fa fa-times fa-1x"></i>&nbsp;&nbsp;Recaptcha is missing.</div>
+			            <div v-if="!is_admin">
+							<br v-show="!is_admin"/>
+							<div v-show="!is_admin" class="g-recaptcha" data-sitekey="6LfzYC4UAAAAADARTXE5OdyOLsm6XiDhgersZzfz"></div>
+							<div v-show="recaptchaError" class="form-control-feedback"><i class="fa fa-times fa-1x"></i>&nbsp;&nbsp;Recaptcha is missing.</div>
+			            </div>
                         <br/>
-                        <button type="submit" class="btn btn-primary">Add Question</button>
+                        <button type="submit" class="btn btn-primary btn-cursor">Add Question</button>
                         <br/>
                         <br/>
                     </div>
@@ -73,7 +75,7 @@
         },
         created() {
             // TODO could use the recaptcha call back instead of an ugly interval
-            if(this.is_admin) {
+            if(!this.is_admin) {
                 this.recaptchaInterval = setInterval(() => {
                     if($("#g-recaptcha-response").val() !== "") {
                         this.recaptchaError = false

@@ -14,7 +14,7 @@ class CreateFaqsTable extends Migration
     public function up()
     {
         Schema::create('faqs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id', 13)->unique();
             $table->string('admin_code', 13)->unique();
             $table->longText('description')->nullable();
             $table->timestamps();

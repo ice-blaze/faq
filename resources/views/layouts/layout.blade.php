@@ -59,7 +59,7 @@
 
         @yield('content')
 
-        <nav class="navbar navbar-light bg-faded text-center fixed-bottom">
+        <nav class="navbar navbar-light bg-faded text-center sticky-bottom">
             <a class="navbar-brand" href="https://github.com/ice-blaze/faq"><i class="fa fa-github fa-1x"></i></a>
         </nav>
 
