@@ -22,7 +22,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="modal" data-target="#inDevModal" href="#">Feedback</a>
+                        <a class="nav-link" href="https://www.reddit.com/r/codeprojects/comments/75t4ql/faq_creator_web_tool/">Feedback</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link inDevModal" data-toggle="modal" data-target="#inDevModal" href="#">By us a beer</a>
